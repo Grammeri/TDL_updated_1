@@ -40,7 +40,7 @@ export const Todolist = (props:PropsType) => {
                         {props.arrForTodolist1.map(m => {
                             debugger
                             return (<li><input type={"checkbox"} checked={m.isDone}/>{m.title}
-                            </li>)
+                            <span><button>X<span/></button></span></li>)
                         })}
                     </ul>
 
