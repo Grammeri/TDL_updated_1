@@ -1,45 +1,41 @@
-import React, {useState} from "react";
+import React from "react";
 import "./App.css"
 import {taskType, Todolist} from "./Todolist";
 
 export type FilterValues = "all" | "active" | "completed"
 
-
 const App = () => {
-
-    let[tasks,setTasks]=useState<Array<taskType>>([
+    const result = React.useState([ //можно не импортировать useState
         {id:1, title:"HTML&CSS", isDone:true},
         {id:2, title:"JS", isDone:true},
         {id:3, title:"React", isDone:false},
-    ])
-    let [filter,setFilter]=useState<FilterValues>("all")
+    ]) // то что вернет функция мы положим в переменную result
+
+        //result[1]() можем записать так, но выглядит странно
+    //result[0] если хотим посмотреть данные
+
+    const setTasks = result[1]
+    const tasks = result[0]
+
+        //За счет деструктуризирующего присваивания получаем:
+    
+/*     const [tasks,setTasks]= useState([
+         {id:1, title:"HTML&CSS", isDone:true},
+         {id:2, title:"JS", isDone:true},
+         {id:3, title:"React", isDone:false},
+     ])*/
 
     const removeTask=(taskId:number)=>{
-        //let resultTasks=tasks.filter(f=>f.id!==taskId)
-        //setTasks(resultTasks)
         setTasks(tasks.filter(f=>f.id!==taskId))
-    }
-
-   let filteredTasks = tasks
-    if(filter==="completed") {
-        filteredTasks = tasks.filter(f => !f.isDone)
-    }
-    if(filter==="active") {
-        filteredTasks = tasks.filter(f => f.isDone)
-    }
-    const changeFilter = (value:FilterValues) =>{
-        setFilter(value)
     }
     return (
         <div className={"App"}>
             <Todolist title={"What to learn"}
-                      tasks={filteredTasks}
+                      tasks={tasks}
                       removeTask={removeTask}
-                      changeFilter={changeFilter}
             />
         </div>
     )
 }
-
-export default App //App requires default export only!
+export default App
 
