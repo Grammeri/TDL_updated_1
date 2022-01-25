@@ -26,9 +26,9 @@ export const Todolist = (props:PropsType) => {
     }}
     const addTask = () => {props.addTask(taskTitle)
     setTaskTitle("")}
-    const onAllBtnClick = () =>{props.filterChange("all")}
-    const onCompletedBtnClick = () =>{props.filterChange("completed")}
-    const onActiveBtnClick = () =>{props.filterChange("active")}
+    const onFilterBtnClick = (value:FilterType)=>{props.filterChange(value)}
+    /*const onCompletedBtnClick = () =>{props.filterChange("completed")}
+    const onActiveBtnClick = () =>{props.filterChange("active")}*/
 
     let [taskTitle, setTaskTitle]=React.useState("")
     return (
@@ -53,9 +53,9 @@ export const Todolist = (props:PropsType) => {
                     })}
                 </ul>
                 <div>
-                    <button onClick={onAllBtnClick}>All</button>
-                    <button onClick={onActiveBtnClick}>Active</button>
-                    <button onClick={onCompletedBtnClick}>Completed</button>
+                    <button onClick={()=>{onFilterBtnClick("all")}}>All</button>
+                    <button onClick={()=>onFilterBtnClick("active")}>Active</button>
+                    <button onClick={()=>onFilterBtnClick("completed")}>Completed</button>
                 </div>
             </div>
         </div>
