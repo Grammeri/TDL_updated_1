@@ -1,4 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
+import {Button} from "./Components/Button";
 
 export type PropsType = {
     title?:string
@@ -20,15 +21,13 @@ export type FilterType = "all" | "active" | "completed"
 export const Todolist = (props:PropsType) => {
 
     const onTextChangeHandler = (e:ChangeEvent<HTMLInputElement>)=>{setTaskTitle(e.currentTarget.value)}
-    const onKeyPressHandler = (e:KeyboardEvent<HTMLInputElement>)=>{if(e.charCode===13){
+    const onKeyPressHandler = (e:KeyboardEvent<HTMLInputElement>)=>{if(e.key==="Enter"){
         props.addTask(taskTitle)
         setTaskTitle("")
     }}
     const addTask = () => {props.addTask(taskTitle)
     setTaskTitle("")}
-    const onFilterBtnClick = (value:FilterType)=>{props.filterChange(value)}
-    /*const onCompletedBtnClick = () =>{props.filterChange("completed")}
-    const onActiveBtnClick = () =>{props.filterChange("active")}*/
+
 
     let [taskTitle, setTaskTitle]=React.useState("")
     return (
@@ -53,9 +52,13 @@ export const Todolist = (props:PropsType) => {
                     })}
                 </ul>
                 <div>
-                    <button onClick={()=>{onFilterBtnClick("all")}}>All</button>
-                    <button onClick={()=>onFilterBtnClick("active")}>Active</button>
-                    <button onClick={()=>onFilterBtnClick("completed")}>Completed</button>
+                    <Button name={"all"} callback={props.filterChange}/>
+                    <Button name={"active"} callback={props.filterChange}/>
+                    <Button name={"completed"} callback={props.filterChange}/>
+
+{/*                    <button onClick={()=>{props.filterChange("all")}}>All</button>
+                    <button onClick={()=>{props.filterChange("active")}}>Active</button>
+                    <button onClick={()=>{props.filterChange("completed")}}>Completed</button>*/}
                 </div>
             </div>
         </div>
