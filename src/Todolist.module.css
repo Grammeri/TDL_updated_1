@@ -1,0 +1,15 @@
+.error {
+    border: 3px solid red;
+}
+
+.errorMessage {
+    color:red
+}
+
+.coloredButtons {
+    background-color:aqua;
+}
+
+.newColoredBtn {
+    background-color: red;
+}

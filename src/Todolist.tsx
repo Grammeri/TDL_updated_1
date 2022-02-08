@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import {Button} from "./Components/Button";
 import styles from "./Todolist.module.css"
+import {MapForTDL} from "./Components/Map";
 
 export type PropsType = {
     title?:string
@@ -64,16 +65,8 @@ export const Todolist = (props:PropsType) => {
                 />
                 <button  onClick={addTask}>+</button>
                 {error && <div className={styles.errorMessage}>Must be completed!</div>}
-                <ul>
-                    {props.tasks.map(m => {
+                <MapForTDL tasks={props.tasks} removeTaskHandler={removeTaskHandler}/>
 
-                        return (<li><input type={"checkbox"} checked={m.isDone}/>{m.title}
-                           {/* <span><button onClick={()=>removeTaskHandler(m.id)}>X</button></span>*/}
-                            <Button callback={()=>removeTaskHandler(m.id)} name={"x"}/>
-                           </li>)
-
-                    })}
-                </ul>
                 <div>
                     <Button name={"all"} callback={()=>setFilterHander("all")} styleForBtn={props.filter} />
                     <Button name={"active"} callback={()=>setFilterHander("active")} styleForBtn={props.filter}/>
