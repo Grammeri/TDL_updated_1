@@ -43,6 +43,7 @@ const App = () => {
                       removeTask={removeTask}
                       filterChange={filterChange}
                       addTask={addTask}
+                      filter={filter}
             />
         </div>
     )

@@ -1,10 +1,12 @@
 import React from 'react';
 import {FilterType} from "../Todolist";
+import styles from "../Todolist.module.css"
 
 type ButtonPropsType = {
     callback:()=>void
     name:string
-    }
+    styleForBtn?:FilterType
+}
 
 export const Button = (props:ButtonPropsType) => {
     const onClickHandler = () => {
@@ -12,7 +14,8 @@ export const Button = (props:ButtonPropsType) => {
     }
 
     return (
-        <button onClick={onClickHandler}>{props.name}</button>
+        <button className={props.styleForBtn === props.name ? styles.coloredButtons : ""}
+                onClick={onClickHandler}>{props.name}</button>
     );
 };
 

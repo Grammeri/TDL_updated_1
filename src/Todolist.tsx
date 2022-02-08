@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import {Button} from "./Components/Button";
+import styles from "./Todolist.module.css"
 
 export type PropsType = {
     title?:string
@@ -8,30 +9,39 @@ export type PropsType = {
     removeTask:(taskId:string)=>void
     filterChange:(value:FilterType)=>void
     addTask:(value:string)=>void
+    filter:FilterType
    }
 
 export type TaskType = {
     id:string,
     title: string,
     isDone: boolean,
-}
+ }
 
 export type FilterType = "all" | "active" | "completed"
 
 export const Todolist = (props:PropsType) => {
+    let [taskTitle, setTaskTitle]=React.useState("")
+    let [error, setError]=React.useState(false)
 
     const onTextChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTaskTitle(e.currentTarget.value)
+        setError(false)
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
+            if(taskTitle!=="")
             props.addTask(taskTitle)
             setTaskTitle("")
         }
     }
     const addTask = () => {
-        props.addTask(taskTitle)
-        setTaskTitle("")
+        if (taskTitle !== "") {
+            props.addTask(taskTitle.trim())
+            setTaskTitle("")
+        } else {
+            setError(true)
+        }
     }
     const setFilterHander = (value: FilterType) => {
         props.filterChange(value)
@@ -40,7 +50,6 @@ export const Todolist = (props:PropsType) => {
         props.removeTask(Id)
     }
 
-    let [taskTitle, setTaskTitle]=React.useState("")
     return (
         <div>
             <div>
@@ -51,8 +60,10 @@ export const Todolist = (props:PropsType) => {
                 <input value={taskTitle}
                        onChange={onTextChangeHandler}
                 onKeyPress={onKeyPressHandler}
+                       className={error ? styles.error : ""}
                 />
-                <button onClick={addTask}>+</button>
+                <button  onClick={addTask}>+</button>
+                {error && <div className={styles.errorMessage}>Must be completed!</div>}
                 <ul>
                     {props.tasks.map(m => {
 
@@ -64,9 +75,9 @@ export const Todolist = (props:PropsType) => {
                     })}
                 </ul>
                 <div>
-                    <Button name={"all"} callback={()=>setFilterHander("all")}/>
-                    <Button name={"active"} callback={()=>setFilterHander("active")}/>
-                    <Button name={"complete"} callback={()=>setFilterHander("completed")}/>
+                    <Button name={"all"} callback={()=>setFilterHander("all")} styleForBtn={props.filter} />
+                    <Button name={"active"} callback={()=>setFilterHander("active")} styleForBtn={props.filter}/>
+                    <Button name={"completed"} callback={()=>setFilterHander("completed")} styleForBtn={props.filter}/>
 
                 </div>
             </div>
